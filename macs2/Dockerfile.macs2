@@ -1,0 +1,30 @@
+
+############################################################
+# Dockerfile to build bedtools image
+# Based on Ubuntu 16.04
+# docker build -t remap:macs2  --file Dockerfile.macs2  .
+# docker run -i -t remap:macs2 macs2
+############################################################
+
+# Set the base image to Ubuntu
+FROM ubuntu:16.04
+
+# File Author / Maintainer
+MAINTAINER Benoit Ballester <benoit.ballester@inserm.fr>
+
+LABEL ubuntu.version="16.04" 
+
+# Setup ENV variables
+ENV MACS2_VERSION="2.1.1.20160309"
+
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update
+RUN apt-get install -y zip unzip   gawk 
+
+
+USER root
+ 
+RUN apt-get install -y wget python-pip 
+RUN pip install numpy 
+RUN pip install macs2==$MACS2_VERSION
+
